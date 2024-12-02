@@ -2,8 +2,14 @@ import UserItem from './components/user';
 import SearchInput from './components/searchInput';
 import { useUsers } from './contexts/usersContext';
 
+// TODO: filtro por nome/email etc
+// TODO: handle errors (if not online, if link broken, if conection slow etc)
 function App() {
-    const { users } = useUsers();
+    const {
+        users,
+        hasUsersDisplayed,
+        haveFetched,
+    } = useUsers();
 
     return (
         <main className="bg-neutral-50 min-h-dvh py-4">
@@ -15,6 +21,9 @@ function App() {
                     {users?.map((user) => (
                         <UserItem key={user.id} data={user} />
                     ))}
+                    {(!hasUsersDisplayed && haveFetched) && (
+                        <p>No users found!</p>
+                    )}
                 </ul>
             </section>
         </main>

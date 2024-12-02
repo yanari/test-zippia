@@ -3,10 +3,9 @@ import { useUsers } from "../contexts/usersContext";
 
 export default function SearchInput() {
     const {
-        users,
         fetchUsers,
         filterUsersByName,
-        hasUsersDisplayed,
+        haveFetched,
     } = useUsers();
 
     const [searchField, setSearchField] = useState('');
@@ -24,9 +23,10 @@ export default function SearchInput() {
 
     return (
         <div className="flex justify-stretch gap-4">
-            {hasUsersDisplayed ? (
+            {haveFetched ? (
                 <div className="grow relative">
                     <input
+                        name="search_field"
                         onChange={updateField}
                         value={searchField}
                         className="py-2 px-4 rounded-md border-teal-700 border focus:shadow-md shadow-teal-700 outline-none w-full"

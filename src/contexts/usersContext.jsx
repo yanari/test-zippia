@@ -22,6 +22,10 @@ const UsersProvider = ({ children }) => {
         return users.length > 0;
     }, [users]);
 
+    const haveFetched = useMemo(() => {
+        return allUsers.length > 0;
+    }, [allUsers]);
+
     const filterUsersByName = (name) => {
         const usersFiltered = allUsers.filter((user) => {
             const userLowered = user?.name.toLowerCase();
@@ -37,6 +41,7 @@ const UsersProvider = ({ children }) => {
             fetchUsers,
             filterUsersByName,
             hasUsersDisplayed,
+            haveFetched,
         }}>
             {children}
         </UsersContext.Provider>
