@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useMemo } from 'react';
 
 const UsersContext = createContext();
 
@@ -18,9 +18,9 @@ const UsersProvider = ({ children }) => {
         setAllUsers(json);
     }
 
-    const resetAllUsers = () => {
-        setUsers(allUsers);
-    }
+    const hasUsersDisplayed = useMemo(() => {
+        return users.length > 0;
+    }, [users]);
 
     const filterUsersByName = (name) => {
         const usersFiltered = allUsers.filter((user) => {
@@ -32,7 +32,12 @@ const UsersProvider = ({ children }) => {
     }
 
     return (
-        <UsersContext.Provider value={{ users, allUsers, fetchUsers, filterUsersByName }}>
+        <UsersContext.Provider value={{
+            users,
+            fetchUsers,
+            filterUsersByName,
+            hasUsersDisplayed,
+        }}>
             {children}
         </UsersContext.Provider>
     );

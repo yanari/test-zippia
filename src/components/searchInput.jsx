@@ -6,6 +6,7 @@ export default function SearchInput() {
         users,
         fetchUsers,
         filterUsersByName,
+        hasUsersDisplayed,
     } = useUsers();
 
     const [searchField, setSearchField] = useState('');
@@ -23,24 +24,26 @@ export default function SearchInput() {
 
     return (
         <div className="flex justify-stretch gap-4">
-            <div className="grow relative">
-                <input
-                    onChange={updateField}
-                    value={searchField}
-                    className="py-2 px-4 rounded-md border-teal-700 border focus:shadow-md shadow-teal-700 outline-none w-full"
-                    type="text"
-                />
-                <button onClick={cleanField} className="absolute right-2 top-0 bottom-0">
-                    <CloseIcon className="text-teal-700" />
+            {hasUsersDisplayed ? (
+                <div className="grow relative">
+                    <input
+                        onChange={updateField}
+                        value={searchField}
+                        className="py-2 px-4 rounded-md border-teal-700 border focus:shadow-md shadow-teal-700 outline-none w-full"
+                        type="text"
+                    />
+                    <button onClick={cleanField} className="absolute right-2 top-0 bottom-0">
+                        <CloseIcon className="text-teal-700" />
+                    </button>
+                </div>
+            ) : (
+                <button
+                    className="w-full border border-teal-700 text-teal-700 hover:bg-teal-700 hover:text-white hover:shadow-md shadow-teal-700 rounded-md py-2 px-4 font-semibold disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none"
+                    onClick={fetchUsers}
+                >
+                    Fetch Users
                 </button>
-            </div>
-            <button
-                className="w-40 border border-teal-700 text-teal-700 hover:bg-teal-700 hover:text-white hover:shadow-md shadow-teal-700 rounded-md py-2 px-4 font-semibold disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none"
-                onClick={fetchUsers}
-                disabled={users.length > 0}
-            >
-                Fetch Users
-            </button>
+            )}
         </div>
     )
 }
