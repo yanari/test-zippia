@@ -8,11 +8,13 @@ const ModalProvider = ({ children }) => {
     const [content, setContent] = useState(null);
     
     const setUserDetail = (userId) => {
+        document.body.classList.add('overflow-y-hidden');
         const userData = users.find((user) => user.id === userId);
         setContent(userData)
     }
 
     const handleCloseModal = () => {
+        document.body.classList.remove('overflow-y-hidden');
         setContent(null);
     }
 
