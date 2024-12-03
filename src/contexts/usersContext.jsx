@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useMemo } from 'react';
+import { getNested } from '../utils/lists';
 
 const UsersContext = createContext();
 
@@ -35,6 +36,22 @@ const UsersProvider = ({ children }) => {
         setUsers(usersFiltered);
     }
 
+    const sortUsersBy = (field, order) => {
+        const usersSorted = users.sort((a, b) => {
+            const itemA = getNested(a, field).toLowerCase();
+            const itemB = getNested(b, field).toLowerCase();
+
+            if (order === 'asc') {
+                return itemA.localeCompare(itemB);
+            }
+            if (order === 'des') {
+                return itemB.localeCompare(itemA);
+            }
+        });
+
+        setUsers([...usersSorted]);
+    }
+
     return (
         <UsersContext.Provider value={{
             users,
@@ -42,6 +59,7 @@ const UsersProvider = ({ children }) => {
             filterUsersByName,
             hasUsersDisplayed,
             haveFetched,
+            sortUsersBy
         }}>
             {children}
         </UsersContext.Provider>

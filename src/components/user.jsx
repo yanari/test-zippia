@@ -1,6 +1,5 @@
 export default function UserItem({ data }) {
     const {
-        id,
         name,
         username,
         email,
