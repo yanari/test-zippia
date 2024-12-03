@@ -1,10 +1,11 @@
 import UserItem from './components/user';
+import Modal from './components/modal';
 import SearchInput from './components/searchInput';
 import LoadingIcon from './icons/loadingIcon';
 
 import { useUsers } from './contexts/usersContext';
+import { useModal } from './contexts/modalContext';
 
-// TODO: handle errors (if not online, if link broken, if conection slow etc)
 function App() {
     const {
         users,
@@ -13,6 +14,8 @@ function App() {
         isLoading,
         error
     } = useUsers();
+
+    const { setUserDetail } = useModal();
 
     if (isLoading) {
         return (
@@ -38,13 +41,16 @@ function App() {
             <section className="px-4 md:px-0 max-w-5xl m-auto">
                 <ul className="grid gap-4 md:grid-cols-2">
                     {users?.map((user) => (
-                        <UserItem key={user.id} data={user} />
+                        <button key={user.id} onClick={() => setUserDetail(user.id)}>
+                            <UserItem data={user} />
+                        </button>
                     ))}
                     {(!hasUsersDisplayed && haveFetched) && (
                         <p>No users found!</p>
                     )}
                 </ul>
             </section>
+            <Modal />
         </main>
     )
 }

@@ -9,7 +9,7 @@ export default function UserItem({ data }) {
     } = data;
 
     return (
-        <li className="rounded-md shadow-md p-4 bg-white grid gap-4">
+        <li className="text-start rounded-md shadow-md p-4 bg-white grid gap-4">
             <div className="flex gap-2 items-baseline grow">
                 <h3 className="font-semibold text-xl">{name}</h3>
                 <span className="text-sm text-gray-600">@{username}</span>
