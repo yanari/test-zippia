@@ -6,17 +6,22 @@ const UsersContext = createContext();
 const UsersProvider = ({ children }) => {
     const [allUsers, setAllUsers] = useState([]);
     const [users, setUsers] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     const fetchUsers = async () => {
-        const res = await fetch('https://jsonplaceholder.typicode.com/users');
-        const json = await res.json()
-
-        if (!res.ok) {
-            return { message: res.text };
+        setIsLoading(true);
+        try {
+            const res = await fetch('https://jsonplaceholder.typicode.com/users');
+            const json = await res.json();
+    
+            setUsers(json);
+            setAllUsers(json);
+            setIsLoading(false);
+        } catch (error) {
+            setError(error);
+            setIsLoading(false);
         }
-
-        setUsers(json);
-        setAllUsers(json);
     }
 
     const hasUsersDisplayed = useMemo(() => {
@@ -59,7 +64,9 @@ const UsersProvider = ({ children }) => {
             filterUsersByName,
             hasUsersDisplayed,
             haveFetched,
-            sortUsersBy
+            sortUsersBy,
+            error,
+            isLoading,
         }}>
             {children}
         </UsersContext.Provider>

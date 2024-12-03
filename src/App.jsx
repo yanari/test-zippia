@@ -1,5 +1,7 @@
 import UserItem from './components/user';
 import SearchInput from './components/searchInput';
+import LoadingIcon from './icons/loadingIcon';
+
 import { useUsers } from './contexts/usersContext';
 
 // TODO: handle errors (if not online, if link broken, if conection slow etc)
@@ -8,7 +10,25 @@ function App() {
         users,
         hasUsersDisplayed,
         haveFetched,
+        isLoading,
+        error
     } = useUsers();
+
+    if (isLoading) {
+        return (
+            <div className="mt-20 w-full flex justify-center">
+                <LoadingIcon/>
+            </div>
+        )
+    }
+
+    if (error) {
+        return (
+            <div className="mt-20 w-full flex justify-center text-lg">
+                Oops! Something went wrong. Please try again later.
+            </div>
+        )
+    }
 
     return (
         <main className="bg-neutral-50 min-h-dvh py-4">
